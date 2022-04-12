@@ -17,6 +17,12 @@ import axios from "axios";
           this.products = response.data
         });
       },
+      indexImages: function () {
+        axios.get("/images").then((response) => {
+          console.log("images index", response);
+          this.images = response.data
+        });
+      }
     },
   };
 </script>
@@ -24,6 +30,13 @@ import axios from "axios";
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
+    <h3>All Photos</h3>
+    <div v-for="product in products" v-bind:key="product.id">
+    <img v-bind:src="product.images" v-bind:alt="product.name">
+    <h3>{{ product.quantity }} <br> {{ product.price }}</h3>
+    
+    
+    </div>
   </div>
 </template>
 
