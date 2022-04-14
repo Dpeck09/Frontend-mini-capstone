@@ -1,28 +1,24 @@
 <script>
-import axios from "axios";
+import axios from 'axios';
   export default {
     data: function () {
       return {
-        message: "I hope this doesnt ruin my whole mini capstone:",
+        message: "Welcome to Vue.js!",
         products: []
       };
     },
     created: function () {
       this.indexProducts();
+      
     },
     methods: {
-      indexProducts: function () {
-        axios.get("/products").then((response) => {
-          console.log("products index", response);
-          this.products = response.data
+      indexProducts() {
+        console.log('grabbing products')
+        axios.get('/products.json').then(response => {
+        console.log(response.data);
+        this.products = response.data;
         });
       },
-      indexImages: function () {
-        axios.get("/images").then((response) => {
-          console.log("images index", response);
-          this.images = response.data
-        });
-      }
     },
   };
 </script>
@@ -30,12 +26,10 @@ import axios from "axios";
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <h3>All Photos</h3>
-    <div v-for="product in products" v-bind:key="product.id">
-    <img v-bind:src="product.images" v-bind:alt="product.name">
-    <h3>{{ product.quantity }} <br> {{ product.price }}</h3>
-    
-    
+    <div v-for="product in products">
+      {{product.id}}: {{product.name}}
+
+      <router-link v-bind:to="`/products/${product.id}`">More details</router-link>
     </div>
   </div>
 </template>
